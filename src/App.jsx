@@ -1,46 +1,46 @@
-import { useEffect, useState, useCallback } from 'react'
-import SearchInput from './components/SearchInput'
-import UserCard from './components/UserCard'
-import axios from 'axios'
-import ReactModal from 'react-modal'
-import { ToastContainer} from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { motion } from 'framer-motion'
-import { CircularProgress } from '@mui/material'
-import { useAuth } from './context/AuthContext'
+import { useEffect, useState, useCallback } from "react";
+import SearchInput from "./components/SearchInput";
+import UserCard from "./components/UserCard";
+import axios from "axios";
+import ReactModal from "react-modal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion";
+import { CircularProgress } from "@mui/material";
+import { useAuth } from "./context/AuthContext";
 
 export default function App() {
-  const [usuarios, setUsuarios] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [modalAbierto, setModalAbierto] = useState(false)
-  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null)
-  const { logout } = useAuth()
-  const [buscando, setBuscando] = useState(false)
-  const [filtrados, setFiltrados] = useState([])
-  const API_URL = 'http://localhost:8000'
+  const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
+  const { logout } = useAuth();
+  const [buscando, setBuscando] = useState(false);
+  const [filtrados, setFiltrados] = useState([]);
+  const API_URL = "http://localhost:8000";
 
   const obtenerUsuarios = async () => {
     try {
-      const response = await axios.get(`${API_URL}/usuarios`)
+      const response = await axios.get(`${API_URL}/usuarios`);
 
-      setUsuarios(response.data)
-      setFiltrados(response.data)
+      setUsuarios(response.data);
+      setFiltrados(response.data);
     } catch (error) {
-      console.error('Error al obtener usuarios:', error.message)
+      console.error("Error al obtener usuarios:", error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    obtenerUsuarios()
-  }, [])
+    obtenerUsuarios();
+  }, []);
 
   const filtrarUsuarios = useCallback(
     (query) => {
-      setBuscando(true)
+      setBuscando(true);
       setTimeout(() => {
-        const q = query.trim().toLowerCase()
+        const q = query.trim().toLowerCase();
         const resultados = usuarios.filter((usuario) =>
           [
             usuario.nombre,
@@ -49,44 +49,48 @@ export default function App() {
             usuario.perfil,
             usuario.correo,
           ].some((campo) => String(campo).toLowerCase().includes(q))
-        )
+        );
 
-        setFiltrados(resultados)
-        setBuscando(false)
+        setFiltrados(resultados);
+        setBuscando(false);
         if (resultados.length === 0) {
           toast.info(
-            'No se encontraron usuarios que coincidan con la búsqueda.',
+            "No se encontraron usuarios que coincidan con la búsqueda.",
             {
-              position: 'top-right',
+              position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: 'light',
+              theme: "light",
             }
-          )
+          );
         }
-      }, 2000)
+      }, 2000);
     },
     [usuarios]
-  )
+  );
 
   const abrirModal = (usuario) => {
-    setUsuarioSeleccionado(usuario)
-    setModalAbierto(true)
-  }
+    setUsuarioSeleccionado(usuario);
+    setModalAbierto(true);
+  };
 
   const cerrarModal = () => {
-    setModalAbierto(false)
-    setUsuarioSeleccionado(null)
-  }
-
+    setModalAbierto(false);
+    setUsuarioSeleccionado(null);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
-      <button className='bg-red-500 text-white px-4 py-2 rounded' onClick={logout}>logout</button>
+      <button
+        className="bg-red-500 text-white px-4 py-2 rounded"
+        onClick={logout}
+      >
+        logout
+      </button>
       <h1 className="text-2xl font-bold mb-4 text-center">
         Buscador interactivo
       </h1>
@@ -161,5 +165,5 @@ export default function App() {
         )}
       </ReactModal>
     </div>
-  )
+  );
 }
