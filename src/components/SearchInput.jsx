@@ -4,7 +4,7 @@ export default function SearchInput({ onSearch }) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    onSearch(query);
+    onSearch(query); 
   }, [query, onSearch]);
 
   return (

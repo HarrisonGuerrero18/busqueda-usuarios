@@ -1,6 +1,6 @@
-export default function Card({ usuario }) {
+export default function Card({ usuario, onClick }) {
   return (
-    <div className="p-6 bg-white shadow-lg rounded-2xl hover:shadow-xl hover:scale-[1.03] transition-transform duration-300 ease-out cursor-pointer min-h-[250px] flex items-center justify-center">
+    <div onClick={onClick} className="p-6 bg-white shadow-lg rounded-2xl hover:shadow-xl hover:scale-[1.03] transition-transform duration-300 ease-out cursor-pointer min-h-[250px] flex items-center justify-center">
       <div className="flex flex-col items-center">
         <img
           src={usuario.foto}

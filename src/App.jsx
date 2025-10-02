@@ -3,7 +3,7 @@ import SearchInput from "./components/SearchInput";
 import UserCard from "./components/UserCard";
 import axios from "axios";
 import ReactModal from "react-modal";
-import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
 import { CircularProgress } from "@mui/material";
@@ -53,7 +53,7 @@ export default function App() {
 
         setFiltrados(resultados);
         setBuscando(false);
-        if (resultados.length === 0) {
+        if (resultados.length === 0 && query.trim() != "") {
           toast.info(
             "No se encontraron usuarios que coincidan con la búsqueda.",
             {
@@ -95,7 +95,7 @@ export default function App() {
         Buscador interactivo
       </h1>
       <div className="max-w-md mx-auto mb-6">
-        <SearchInput onSearch={filtrarUsuarios} />
+        <SearchInput onSearch={filtrarUsuarios} /> {/* Línea 90 */}
       </div>
 
       {loading && (

@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           path="/usuarios"
           element={
             <PrivateRoute>
-              <App />
+                <App /> 
             </PrivateRoute>
           }
         />
